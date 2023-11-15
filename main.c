@@ -1,21 +1,18 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <unistd.h>
-#include <sys/types.h>
-#include <sys/wait.h>
-#include <signal.h>
+#include "shell.h"
 
 #define MAX_COMMAND_LENGTH 100
+#define MAX_ARGUMENTS 10
 
+/* Signal handler for interrupt (Ctrl+C) */
 void sign_handler(int sign)
 {
     (void)sign;
     signal(SIGINT, sign_handler);
-    write(STDIN_FILENO, "\n$ ", 3);
+    write(STDOUT_FILENO, "\n$ ", 3);
 }
 
-int execute_command(char *command)
+/* Execute a command with arguments */
+int execute_command(char *command, char **arguments)
 {
     pid_t child_pid;
     int status;
@@ -29,12 +26,14 @@ int execute_command(char *command)
 
     if (child_pid == 0)
     {
-        execlp(command, command, (char *)NULL);
+        /* Execute the command with arguments */
+        execvp(command, arguments);
         perror("Error executing command");
         _exit(EXIT_FAILURE);
     }
     else
     {
+        /* Wait for the child process to finish */
         waitpid(child_pid, &status, 0);
         if (WIFEXITED(status))
             return WEXITSTATUS(status);
@@ -46,8 +45,11 @@ int execute_command(char *command)
 int main()
 {
     char command[MAX_COMMAND_LENGTH];
+    char *arguments[MAX_ARGUMENTS];
     int ret_code;
     size_t command_length = strlen(command);
+    char *token = strtok(command, " ");
+    int arg_count = 0;
 
     signal(SIGINT, sign_handler);
 
@@ -57,16 +59,25 @@ int main()
 
         if (fgets(command, MAX_COMMAND_LENGTH, stdin) == NULL)
         {
-            /*Handle end of file (Ctrl+D)*/
+            /* Handle end of file (Ctrl+D) */
             write(STDOUT_FILENO, "\n", 1);
             break;
         }
 
-        /*Remove newline character from the command*/
+        /* Remove newline character from the command */
         if (command_length > 0 && command[command_length - 1] == '\n')
             command[command_length - 1] = '\0';
 
-        ret_code = execute_command(command);
+        /* Tokenize the command and arguments */
+        while (token != NULL && arg_count < MAX_ARGUMENTS - 1)
+        {
+            arguments[arg_count++] = token;
+            token = strtok(NULL, " ");
+        }
+        arguments[arg_count] = NULL; /* Null-terminate the array */
+
+        /* Execute the command with arguments */
+        ret_code = execute_command(arguments[0], arguments);
 
         if (ret_code != 0)
             fprintf(stderr, "Error: Command failed with exit code %d\n", ret_code);
