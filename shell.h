@@ -9,4 +9,8 @@
 #include <sys/wait.h>
 #include <signal.h>
 
+/* Main */
+void sign_handler(int sign);
+int execute_command(char *command, char **arguments);
+
 #endif

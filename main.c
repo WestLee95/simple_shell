@@ -1,55 +1,18 @@
 #include "shell.h"
 
+
 #define MAX_COMMAND_LENGTH 100
 #define MAX_ARGUMENTS 10
 
-/* Signal handler for interrupt (Ctrl+C) */
-void sign_handler(int sign)
-{
-    (void)sign;
-    signal(SIGINT, sign_handler);
-    write(STDOUT_FILENO, "\n$ ", 3);
-}
-
-/* Execute a command with arguments */
-int execute_command(char *command, char **arguments)
-{
-    pid_t child_pid;
-    int status;
-
-    child_pid = fork();
-    if (child_pid == -1)
-    {
-        perror("Error creating child process");
-        return 1;
-    }
-
-    if (child_pid == 0)
-    {
-        /* Execute the command with arguments */
-        execvp(command, arguments);
-        perror("Error executing command");
-        _exit(EXIT_FAILURE);
-    }
-    else
-    {
-        /* Wait for the child process to finish */
-        waitpid(child_pid, &status, 0);
-        if (WIFEXITED(status))
-            return WEXITSTATUS(status);
-        else
-            return 1;
-    }
-}
 
 int main()
 {
     char command[MAX_COMMAND_LENGTH];
     char *arguments[MAX_ARGUMENTS];
     int ret_code;
-    size_t command_length = strlen(command);
     char *token = strtok(command, " ");
     int arg_count = 0;
+    size_t command_length = strlen(command);
 
     signal(SIGINT, sign_handler);
 
@@ -84,4 +47,48 @@ int main()
     }
 
     return 0;
+}
+
+void sign_handler(int sign)
+{
+    (void)sign;
+    signal(SIGINT, sign_handler);
+    write(STDOUT_FILENO, "\n$ ", 3);
+}
+
+int execute_command(char *command, char **arguments)
+{
+    pid_t child_pid;
+    int status;
+
+    /* Check if the command exists */
+    if (access(command, X_OK) == -1)
+    {
+        fprintf(stderr, "Error: Command '%s' not found\n", command);
+        return 1;
+    }
+
+    child_pid = fork();
+    if (child_pid == -1)
+    {
+        perror("Error creating child process");
+        return 1;
+    }
+
+    if (child_pid == 0)
+    {
+        /* Execute the command with arguments */
+        execvp(command, arguments);
+        perror("Error executing command");
+        _exit(EXIT_FAILURE);
+    }
+    else
+    {
+        /* Wait for the child process to finish */
+        waitpid(child_pid, &status, 0);
+        if (WIFEXITED(status))
+            return WEXITSTATUS(status);
+        else
+            return 1;
+    }
 }
