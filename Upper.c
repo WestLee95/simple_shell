@@ -1,11 +1,11 @@
-#include "ichigos.h"
+#include "verma.h"
 /**
- * check_dir - checks ":" if is in the current directory.
+ * examine_dir - checks ":" if is in the current directory.
  * @path: the type char pointer char.
  * @m: type int pointer of index.
  * Return: 1 if the path is searchable in the cd, 0 otherwise.
  */
-int check_dir(char *path, int *m)
+int examine_dir(char *path, int *m)
 {
 	if (path[*m] == ':')
 		return (1);
@@ -21,30 +21,30 @@ int check_dir(char *path, int *m)
 	return (0);
 }
 /**
- * w_command - locates a command
- * @cmd: command name
- * @env_variable: environment variable
+ * z_cmd - locates a command
+ * @cmd: command identity
+ * @environ_var: environment variable
  * Return: location of the command.
  */
-char *w_command(char *cmd, char **env_variable)
+char *z_cmd(char *cmd, char **environ_var)
 {
 	char *path, *ptr_path, *token_path, *d;
 	int len_dir, len_cmd, u;
 	struct stat st;
 
-	path = obtainenv("PATH", env_variable);
+	path = obtainenv("PATH", environ_var);
 	if (path)
 	{
-		ptr_path = Stardom(path);
-		len_cmd = Length_ofString(cmd);
-		token_path = split_string(ptr_path, ":");
+		ptr_path = Moon(path);
+		len_cmd = String_findLength(cmd);
+		token_path = cut_string(ptr_path, ":");
 		u = 0;
 		while (token_path != NULL)
 		{
-			if (check_dir(path, &u))
+			if (examine_dir(path, &u))
 				if (stat(cmd, &st) == 0)
 					return (cmd);
-			len_dir = Length_ofString(token_path);
+			len_dir = String_findLength(token_path);
 			d = malloc(len_dir + len_cmd + 2);
 			concpy(d, token_path);
 			concat(d, "/");
@@ -56,7 +56,7 @@ char *w_command(char *cmd, char **env_variable)
 				return (d);
 			}
 			free(d);
-			token_path = split_string(NULL, ":");
+			token_path = cut_string(NULL, ":");
 		}
 		free(ptr_path);
 		if (stat(cmd, &st) == 0)
@@ -69,31 +69,31 @@ char *w_command(char *cmd, char **env_variable)
 	return (NULL);
 }
 /**
- * check_e - determines if is an executable
- * @dsh: data structure
+ * check_f - determines if is an executable
+ * @dish: data structure
  * Return: 0 if is not an executable, other number if it does
  */
-int check_e(ichigos_shell *dsh)
+int check_f(verma_shell *dish)
 {
 	struct stat st;
 	int u;
-	char *input;
+	char *enter;
 
-	input = dsh->args[0];
-	for (u = 0; input[u]; u++)
+	enter = dish->argz[0];
+	for (u = 0; enter[u]; u++)
 	{
-		if (input[u] == '.')
+		if (enter[u] == '.')
 		{
-			if (input[u + 1] == '.')
+			if (enter[u + 1] == '.')
 				return (0);
-			if (input[u + 1] == '/')
+			if (enter[u + 1] == '/')
 				continue;
 			else
 				break;
 		}
-		else if (input[u] == '/' && u != 0)
+		else if (enter[u] == '/' && u != 0)
 		{
-			if (input[u + 1] == '.')
+			if (enter[u + 1] == '.')
 				continue;
 			u++;
 			break;
@@ -104,32 +104,32 @@ int check_e(ichigos_shell *dsh)
 	if (u == 0)
 		return (0);
 
-	if (stat(input + u, &st) == 0)
+	if (stat(enter + u, &st) == 0)
 	{
 		return (u);
 	}
-	G_ERROR(dsh, 127);
+	G_ERROR(dish, 127);
 	return (-1);
 }
 /**
  * check_SU_permission_cmd - verifies if user has permissions to access
  * @d: destination directory
- * @dsh: data structure
+ * @dish: data structure
  * Return: 1 if there is an error, 0 if not
  */
-int check_SU_permission_cmd(char *d, ichigos_shell *dsh)
+int check_SU_permission_cmd(char *d, verma_shell *dish)
 {
 	if (d == NULL)
 	{
-		G_ERROR(dsh, 127);
+		G_ERROR(dish, 127);
 		return (1);
 	}
 
-	if (concomp(dsh->args[0], d) != 0)
+	if (concomp(dish->argz[0], d) != 0)
 	{
 		if (access(d, X_OK) == -1)
 		{
-			G_ERROR(dsh, 126);
+			G_ERROR(dish, 126);
 			free(d);
 			return (1);
 		}
@@ -137,9 +137,9 @@ int check_SU_permission_cmd(char *d, ichigos_shell *dsh)
 	}
 	else
 	{
-		if (access(dsh->args[0], X_OK) == -1)
+		if (access(dish->argz[0], X_OK) == -1)
 		{
-			G_ERROR(dsh, 126);
+			G_ERROR(dish, 126);
 			return (1);
 		}
 	}
@@ -148,11 +148,11 @@ int check_SU_permission_cmd(char *d, ichigos_shell *dsh)
 }
 
 /**
- * exec_cmd - executes command lines
- * @dsh: data relevant
+ * execute_cmd - executes command rules
+ * @dish: data relevant
  * Return: 1 on success.
  */
-int exec_cmd(ichigos_shell *dsh)
+int execute_cmd(verma_shell *dish)
 {
 	pid_t pd;
 	pid_t wpd;
@@ -161,13 +161,13 @@ int exec_cmd(ichigos_shell *dsh)
 	char *d;
 	(void) wpd;
 
-	executable = check_e(dsh);
+	executable = check_f(dish);
 	if (executable == -1)
 		return (1);
 	if (executable == 0)
 	{
-		d = w_command(dsh->args[0], dsh->env_variable);
-		if (check_SU_permission_cmd(d, dsh) == 1)
+		d = z_cmd(dish->argz[0], dish->environ_var);
+		if (check_for_permission(d, dish) == 1)
 			return (1);
 	}
 
@@ -175,14 +175,14 @@ int exec_cmd(ichigos_shell *dsh)
 	if (pd == 0)
 	{
 		if (executable == 0)
-			d = w_command(dsh->args[0], dsh->env_variable);
+			d = z_cmd(dish->argz[0], dish->environ_var);
 		else
-			d = dsh->args[0];
-		execve(d + executable, dsh->args, dsh->env_variable);
+			d = dish->argz[0];
+		execve(d + executable, dish->argz, dish->environ_var);
 	}
 	else if (pd < 0)
 	{
-		perror(dsh->ichi[0]);
+		perror(dish->verma[0]);
 		return (1);
 	}
 	else
@@ -192,6 +192,6 @@ int exec_cmd(ichigos_shell *dsh)
 		} while (!WIFEXITED(state) && !WIFSIGNALED(state));
 	}
 
-	dsh->status = state / 256;
+	dish->state = state / 256;
 	return (1);
 }

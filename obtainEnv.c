@@ -1,24 +1,24 @@
-#include "ichigos.h"
+#include "verma.h"
 
 /**
  * print_env - prints the evironment variables
- * @dsh: data relevant.
+ * @dish: data relevant.
  * Return: 1 on success.
  */
-int print_env(ichigos_shell *dsh)
+int print_env(verma_shell *dish)
 {
 	int g, h;
 
-	for (g = 0; dsh->env_variable[g]; g++)
+	for (g = 0; dish->environ_var[g]; g++)
 	{
 
-		for (h = 0; dsh->env_variable[g][h]; h++)
+		for (h = 0; dish->environ_var[g][h]; h++)
 			;
 
-		write(STDOUT_FILENO, dsh->env_variable[g], h);
+		write(STDOUT_FILENO, dish->environ_var[g], h);
 		write(STDOUT_FILENO, "\n", 1);
 	}
-	dsh->status = 0;
+	dish->state = 0;
 
 	return (1);
 }
@@ -26,16 +26,16 @@ int print_env(ichigos_shell *dsh)
  * compare_envnames - compares env variables names
  * with the name passed.
  * @nenv: name of the environment variable
- * @name: name passed
+ * @identity: name passed
  * Return: 0 if are not equal. Another value if they are.
  */
-int compare_envnames(const char *nenv, const char *name)
+int compare_envnames(const char *nenv, const char *identity)
 {
 	int m;
 
 	for (m = 0; nenv[m] != '='; m++)
 	{
-		if (nenv[m] != name[m])
+		if (nenv[m] != identity[m])
 		{
 			return (0);
 		}
@@ -45,12 +45,12 @@ int compare_envnames(const char *nenv, const char *name)
 }
 /**
  * obtainenv - get an environment variable
- * @name: name of the environment variable
- * @env_variable: environment variable
+ * @identity: identity of the environment variable
+ * @environ_var: environment variable
  * Return: value of the environment variable if is found.
  * In other case, returns NULL.
  */
-char *obtainenv(const char *name, char **env_variable)
+char *obtainenv(const char *identity, char **environ_var)
 {
 	char *ptr_env;
 	int n, mov;
@@ -58,12 +58,12 @@ char *obtainenv(const char *name, char **env_variable)
 	ptr_env = NULL;
 	mov = 0;
 
-	for (n = 0; env_variable[n]; n++)
+	for (n = 0; environ_var[n]; n++)
 	{
-		mov = compare_envnames(env_variable[n], name);
+		mov = compare_envnames(environ_var[n], identity);
 		if (mov)
 		{
-			ptr_env = env_variable[n];
+			ptr_env = environ_var[n];
 			break;
 		}
 	}
@@ -73,11 +73,11 @@ char *obtainenv(const char *name, char **env_variable)
 
 
 /**
- * check_if_int - defines if string passed is a number
- * @s: input string
+ * examine_if_int - defines if string passed is a number
+ * @s: enter string
  * Return: 1 if string is a number. 0 in other case.
  */
-int check_if_int(const char *s)
+int examine_if_int(const char *s)
 {
 unsigned int u;
 
@@ -92,11 +92,11 @@ return (1);
 }
 
 /**
- * ReverseString - reverses a stribg.
- * @s: input string.
+ * AssistString - reverses a stribg.
+ * @s: enter string.
  * Return: no return.
  */
-void ReverseString(char *s)
+void AssistString(char *s)
 {
 int count = 0, a, b;
 char *string, x;

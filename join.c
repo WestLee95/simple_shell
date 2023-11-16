@@ -1,35 +1,35 @@
-#include "ichigos.h"
+#include "verma.h"
 
 /**
- * bigups - concatenates the message for cd error
- * @dsh: data relevant (directory)
- * @message: message to print
- * @o: output message
- * @d_s: counter lines
- * Return: error message
+ * thumbup - concatenates the senh_fend_message for cd error
+ * @dish: data relevant (directory)
+ * @senh_fend_message: senh_fend_message to print
+ * @o: output senh_fend_message
+ * @h_f: count rules
+ * Return: error senh_fend_message
  */
-char *bigups(ichigos_shell *dsh, char *message, char *o, char *d_s)
+char *thumbup(verma_shell *dish, char *send_message, char *p, char *h_f)
 {
 char *awful_flag;
 
-concpy(o, dsh->ichi[0]);
+concpy(o, dish->verma[0]);
 concat(o, ": ");
-concat(o, d_s);
+concat(o, h_f);
 concat(o, ": ");
-concat(o, dsh->args[0]);
-concat(o, message);
-if (dsh->args[1][0] == '-')
+concat(o, dish->argz[0]);
+concat(o, send_message);
+if (dish->argz[1][0] == '-')
 {
 awful_flag = malloc(3);
 awful_flag[0] = '-';
-awful_flag[1] = dsh->args[1][1];
+awful_flag[1] = dish->argz[1][1];
 awful_flag[2] = '\0';
 concat(o, awful_flag);
 free(awful_flag);
 }
 else
 {
-concat(o, dsh->args[1]);
+concat(o, dish->argz[1]);
 }
 
 concat(o, "\n");
@@ -38,106 +38,106 @@ return (o);
 }
 
 /**
- * error_cd_msg - error message for cd command in get_cd
- * @dsh: data relevant (directory)
- * Return: Error message
+ * msg_error_cd - error send_message for cd command in get_cd
+ * @dish: data relevant (directory)
+ * Return: Error send_message
  *
  */
-char *error_cd_msg(ichigos_shell *dsh)
+char *msg_error_cd(verma_shell *dish)
 {
 int lathum, lathum_id;
-char *o, *d_s, *message;
+char *p, *h_f, *send_message;
 
-d_s = int_toString(dsh->counter);
-if (dsh->args[1][0] == '-')
+h_f = int_toString(dish->count);
+if (dish->argz[1][0] == '-')
 {
-message = ": Bad option ";
+send_message = ": Bad option ";
 lathum_id = 2;
 }
 else
 {
-message = ": There is no such file or directory ";
-lathum_id = Length_ofString(dsh->args[1]);
+send_message = ": There is no such file or directory ";
+lathum_id = String_findLength(dish->argz[1]);
 }
 
-lathum = Length_ofString(dsh->ichi[0]) + Length_ofString(dsh->args[0]);
-lathum += Length_ofString(d_s) + Length_ofString(message) + lathum_id + 5;
+lathum = String_findLength(dish->verma[0]) + String_findLength(dish->argz[0]);
+lathum += String_findLength(h_f) + String_findLength(send_message) + lathum_id + 5;
 o = malloc(sizeof(char) * (lathum + 1));
 if (o == NULL)
 {
-free(d_s);
+free(h_f);
 return (NULL);
 }
 
-o = bigups(dsh, message, o, d_s);
+o = thumbup(dish, send_message, o, h_f);
 
-free(d_s);
+free(h_f);
 
 return (o);
 }
 
 
 /**
- * generic_msg - generic error message for command not found
- * @dsh: data relevant (counter, arguments)
- * Return: Error message
+ * repetitive_msg - generic error send_message for command not found
+ * @dish: data relevant (count, arguments)
+ * Return: Error send_message
  */
-char *generic_msg(ichigos_shell *dsh)
+char *repetitive_msg(verma_shell *dish)
 {
 int lathum;
-char *o;
-char *d_s;
+char *p;
+char *h_f;
 
-d_s = int_toString(dsh->counter);
-lathum = Length_ofString(dsh->ichi[0]) + Length_ofString(d_s);
-lathum += Length_ofString(dsh->args[0]) + 16;
+h_f = int_toString(dish->count);
+lathum = String_findLength(dish->verma[0]) + String_findLength(h_f);
+lathum += String_findLength(dish->argz[0]) + 16;
 o = malloc(sizeof(char) * (lathum + 1));
 while (o == 0)
 {
 free(o);
-free(d_s);
+free(h_f);
 return (NULL);
 }
-concpy(o, dsh->ichi[0]);
+concpy(o, dish->verma[0]);
 concat(o, ": ");
-concat(o, d_s);
+concat(o, h_f);
 concat(o, ": ");
-concat(o, dsh->args[0]);
+concat(o, dish->argz[0]);
 concat(o, ": not found\n");
 concat(o, "\0");
-free(d_s);
+free(h_f);
 return (o);
 }
 
 /**
- * exit_get - generic error message for exit in get_exit
- * @dsh: data relevant (counter, arguments)
- * Return: Error message
+ * obtain_exit - generic error send_message for exit in get_exit
+ * @dish: data relevant (count, arguments)
+ * Return: Error send_message
  */
-char *exit_get(ichigos_shell *dsh)
+char *obtain_exit(verma_shell *dish)
 {
 int lathum;
-char *o;
-char *d_s;
+char *p;
+char *h_f;
 
-d_s = int_toString(dsh->counter);
-lathum = Length_ofString(dsh->ichi[0]) + Length_ofString(d_s);
-lathum += Length_ofString(dsh->args[0]) + Length_ofString(dsh->args[1]) + 23;
+h_f = int_toString(dish->count);
+lathum = String_findLength(dish->verma[0]) + String_findLength(h_f);
+lathum += String_findLength(dish->argz[0]) + String_findLength(dish->argz[1]) + 23;
 o = malloc(sizeof(char) * (lathum + 1));
 while (o == 0)
 {
-free(d_s);
+free(h_f);
 return (NULL);
 }
-concpy(o, dsh->ichi[0]);
+concpy(o, dish->verma[0]);
 concat(o, ": ");
-concat(o, d_s);
+concat(o, h_f);
 concat(o, ": ");
-concat(o, dsh->args[0]);
+concat(o, dish->argz[0]);
 concat(o, ": Bad number: ");
-concat(o, dsh->args[1]);
+concat(o, dish->argz[1]);
 concat(o, "\n\0");
-free(d_s);
+free(h_f);
 
 return (o);
 }

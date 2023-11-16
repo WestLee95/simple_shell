@@ -1,49 +1,49 @@
-#include "ichigos.h"
+#include "verma.h"
 /**
  * f_data - frees data struct
- * @dsh: data struct
+ * @dish: data struct
  * Return: no return
  **********************************/
-void f_data(ichigos_shell *dsh)
+void f_data(verma_shell *dish)
 {
 unsigned int u = 0;
-while (dsh->env_variable[u])
+while (dish->environ_var[u])
 {
-free(dsh->env_variable[u]);
+free(dish->environ_var[u]);
 u++;
 }
 
-free(dsh->env_variable);
-free(dsh->process_id);
+free(dish->environ_var);
+free(dish->process_identifier;
 }
 /**
  * s_data - Initialize data struct
- * @dsh: data struct
- * @ichi: arg vector
+ * @dish: data struct
+ * @verma: arg vector
  * Return: no return
  **********************************/
-void s_data(ichigos_shell *dsh, char **ichi)
+void s_data(verma_shell *dish, char **verma)
 {
 unsigned int u = 0;
 
-dsh->ichi = ichi;
-dsh->input = NULL;
-dsh->args = NULL;
-dsh->status = 0;
-dsh->counter = 1;
+dish->verma = verma;
+dish->enter = NULL;
+dish->argz = NULL;
+dish->state = 0;
+dish->count = 1;
 
 for (u = 0; environ[u]; u++)
 ;
 
-dsh->env_variable = malloc(sizeof(char *) * (u + 1));
+dish->environ_var = malloc(sizeof(char *) * (u + 1));
 
 for (u = 0; environ[u]; u++)
 {
-dsh->env_variable[u] = Stardom(environ[u]);
+dish->environ_var[u] = Moon(environ[u]);
 }
 
-dsh->env_variable[u] = NULL;
-dsh->process_id = int_toString(getpid());
+dish->environ_var[u] = NULL;
+dish->process_identifier = int_toString(getpid());
 }
 
 
@@ -51,19 +51,19 @@ dsh->process_id = int_toString(getpid());
 /**
  * main - Entry point
  * @ac: argument count
- * @ichi: argument vector
+ * @verma: argument vector
  * Return: 0 on success.
  */
-int main(int ac, char **ichi)
+int main(int ac, char **verma)
 {
-	ichigos_shell dsh;
+	verma_shell dish;
 	(void) ac;
 
-	signal(SIGINT, sing_line);
-	s_data(&dsh, ichi);
-	shell_loop(&dsh);
-	f_data(&dsh);
-	if (dsh.status < 0)
+	signal(SIGINT, sing_rule);
+	s_data(&dish, verma);
+	shell_loop(&dish);
+	f_data(&dish);
+	if (dish.state < 0)
 		return (255);
-	return (dsh.status);
+	return (dish.state);
 }

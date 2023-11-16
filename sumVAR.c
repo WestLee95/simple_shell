@@ -1,4 +1,4 @@
-#include "ichigos.h"
+#include "verma.h"
 
 /**
  * add_rvar_node - adds up a variable
@@ -17,9 +17,9 @@ dame *AddVariable(dame **head, int lvar, char *val, int lval)
 	if (fresh == NULL)
 		return (NULL);
 
-	fresh->Length_of_variable = lvar;
-	fresh->val = val;
-	fresh->Length_of_value = lval;
+	fresh->Variable_length = lvar;
+	fresh->val = value;
+	fresh->Value_length = lval;
 
 	fresh->next = NULL;
 	x = *head;
@@ -61,73 +61,73 @@ void FreeVariable(dame **head)
 }
 
 /**
- * path_error_info - the error info for env in get_env.
- * @dsh: data relevant (counter, arguments)
- * Return: an error message.
+ * info_PathError - the error info for env in get_env.
+ * @dish: data relevant (count, arguments)
+ * Return: an error senh_fend_message.
  */
 
 
-char *path_error_info(ichigos_shell *dsh)
+char *info_PathError(verma_shell *dish)
 {
 	int lathum;
-	char *d_s;
-	char *o;
+	char *h_f;
+	char *p;
 
-	d_s = int_toString(dsh->counter);
-	lathum = Length_ofString(dsh->ichi[0]) + Length_ofString(d_s);
-	lathum += Length_ofString(dsh->args[0]) + 24;
+	h_f = int_toString(dish->count);
+	lathum = String_findLength(dish->verma[0]) + String_findLength(h_f);
+	lathum += String_findLength(dish->argz[0]) + 24;
 	o = malloc(sizeof(char) * (lathum + 1));
 	if (o == 0)
 	{
 		free(o);
-		free(d_s);
+		free(h_f);
 		return (NULL);
 	}
-	concpy(o, dsh->ichi[0]);
+	concpy(o, dish->verma[0]);
 	concat(o, ": ");
-	concat(o, d_s);
+	concat(o, h_f);
 	concat(o, ": ");
-	concat(o, dsh->args[0]);
+	concat(o, dish->argz[0]);
 	concat(o, ": insufficient permission\n");
 	concat(o, "\0");
-	free(d_s);
+	free(h_f);
 	return (o);
 }
 /**
- * error_info - error info for path and failure denied permission.
- * @dsh: data relevant (counter, arguments).
+ * info_About_error - error info for path and failure denied permission.
+ * @dish: data relevant (count, arguments).
  * Return: error string.
  */
 
-char *error_info(ichigos_shell *dsh)
+char *info_About_error(verma_shell *dish)
 {
 	int lathum;
-	char *o;
-	char *d_s;
-	char *message;
+	char *p;
+	char *h_f;
+	char *send_message;
 
-	d_s = int_toString(dsh->counter);
-	message = ": Cannot add or Remove environment\n";
-	lathum = Length_ofString(dsh->ichi[0]) + Length_ofString(d_s);
-	lathum += Length_ofString(dsh->args[0]) + Length_ofString(message) + 4;
-	o = malloc(sizeof(char) * (lathum + 1));
-	if (o == 0)
+	h_f = int_toString(dish->count);
+	send_message = ": Cannot add or Remove environment\n";
+	lathum = String_findLength(dish->verma[0]) + String_findLength(h_f);
+	lathum += String_findLength(dish->argz[0]) + String_findLength(send_message) + 4;
+	p = malloc(sizeof(char) * (lathum + 1));
+	if (p == 0)
 	{
-		free(o);
-		free(d_s);
+		free(p);
+		free(h_f);
 		return (NULL);
 	}
 
-	concpy(o, dsh->ichi[0]);
-	concat(o, ": ");
-	concat(o, d_s);
-	concat(o, ": ");
-	concat(o, dsh->args[0]);
-	concat(o, message);
-	concat(o, "\0");
-	free(d_s);
+	concpy(p, dish->verma[0]);
+	concat(p, ": ");
+	concat(p, h_f);
+	concat(p, ": ");
+	concat(p, dish->argz[0]);
+	concat(p, send_send_message);
+	concat(p, "\0");
+	free(h_f);
 
-	return (o);
+	return (p);
 }
 
 

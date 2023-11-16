@@ -1,24 +1,24 @@
-#include "ichigos.h"
+#include "verma.h"
 /**
  * right_var - checks if the typed variable is an env variable
  * @h: head of linked list
- * @in: input string
+ * @in: enter string
  * @data: data structure
  * Return: no return
  */
-void right_var(dame **h, char *in, ichigos_shell *data)
+void right_var(dame **h, char *in, verma_shell *data)
 {
 	int row, chr, k, lval;
 	char **_envr;
 
-	_envr = data->env_variable;
+	_envr = data->environ_var;
 	for (row = 0; _envr[row]; row++)
 	{
 		for (k = 1, chr = 0; _envr[row][chr]; chr++)
 		{
 			if (_envr[row][chr] == '=')
 			{
-				lval = Length_ofString(_envr[row] + chr + 1);
+				lval = String_findLength(_envr[row] + chr + 1);
 				AddVariable(h, k, _envr[row] + chr + 1, lval);
 				return;
 			}
@@ -41,17 +41,17 @@ void right_var(dame **h, char *in, ichigos_shell *data)
 /**
  * more_money - check if the typed variable is $$ or $?
  * @h: head of the linked list
- * @in: input string
- * @st: last status of the Shell
+ * @in: enter string
+ * @st: last state of the Shell
  * @data: data structure
  * Return: no return
  */
-int more_money(dame **h, char *in, char *st, ichigos_shell *data)
+int more_money(dame **h, char *in, char *st, verma_shell *data)
 {
 	int x, lst, lpd;
 
-	lst = Length_ofString(st);
-	lpd = Length_ofString(data->process_id);
+	lst = String_findLength(st);
+	lpd = String_findLength(data->process_identifier);
 
 	for (x = 0; in[x]; x++)
 	{
@@ -60,7 +60,7 @@ int more_money(dame **h, char *in, char *st, ichigos_shell *data)
 			if (in[x + 1] == '?')
 				AddVariable(h, 2, st, lst), x++;
 			else if (in[x + 1] == '$')
-				AddVariable(h, 2, data->process_id, lpd), x++;
+				AddVariable(h, 2, data->process_identifier, lpd), x++;
 			else if (in[x + 1] == '\n')
 				AddVariable(h, 0, NULL, 0);
 			else if (in[x + 1] == '\0')
@@ -82,12 +82,12 @@ int more_money(dame **h, char *in, char *st, ichigos_shell *data)
 /**
  * rep_i - replaces string into variables
  * @head: head of the linked list
- * @input: input string
- * @new_input: new input string (replaced)
+ * @enter: enter string
+ * @new_enter: new enter string (replaced)
  * @nlen: new length
  * Return: replaced string
  */
-char *rep_i(dame **head, char *input, char *new_input, int nlen)
+char *rep_i(dame **head, char *enter, char *new_enter, int nlen)
 {
 	dame *indx;
 	int x, y, z;
@@ -96,61 +96,61 @@ char *rep_i(dame **head, char *input, char *new_input, int nlen)
 	x = y = 0;
 	while (y < nlen)
 	{
-		if (input[y] == '$')
+		if (enter[y] == '$')
 		{
-			if (!(indx->Length_of_variable) && !(indx->Length_of_value))
+			if (!(indx->Variable_length) && !(indx->Value_length))
 			{
-				new_input[x] = input[y];
+				new_enter[x] = enter[y];
 				y++;
 			}
-			else if (indx->Length_of_variable && !(indx->Length_of_value))
+			else if (indx->Variable_length && !(indx->Value_length))
 			{
-				for (z = 0; z < indx->Length_of_variable; z++)
+				for (z = 0; z < indx->Variable_length; z++)
 					y++;
 				x--;
 			}
 			else
 			{
-				for (z = 0; z < indx->Length_of_value; z++)
+				for (z = 0; z < indx->Value_length; z++)
 				{
-					new_input[x] = indx->val[z];
+					new_enter[x] = indx->value[z];
 					x++;
 				}
-				y += (indx->Length_of_variable);
+				y += (indx->Variable_length);
 				x--;
 			}
 			indx = indx->next;
 		}
 		else
 		{
-			new_input[x] = input[y];
+			new_enter[x] = enter[y];
 			y++;
 		}
 	}
 
-	return (new_input);
+	return (new_enter);
 }
 /**
  * replace_variable - calls functions to replace string into vars
- * @input: input string
- * @dsh: data structure
+ * @enter: enter string
+ * @dish: data structure
  * Return: replaced string
  */
-char *replace_variable(char *input, ichigos_shell *dsh)
+char *replace_variable(char *enter, verma_shell *dish)
 {
 	dame *head, *indx;
-	char *status, *new_input;
+	char *state, *new_enter;
 	int olen, nlen;
 
-	status = int_toString(dsh->status);
+	state = int_toString(dish->state);
 	head = NULL;
 
-	olen = more_money(&head, input, status, dsh);
+	olen = more_money(&head, enter, state, dish);
 
 	if (head == NULL)
 	{
-		free(status);
-		return (input);
+		free(state);
+		return (enter);
 	}
 
 	indx = head;
@@ -158,20 +158,20 @@ char *replace_variable(char *input, ichigos_shell *dsh)
 
 	while (indx != NULL)
 	{
-		nlen += (indx->Length_of_value - indx->Length_of_variable);
+		nlen += (indx->Value_length - indx->Variable_length);
 		indx = indx->next;
 	}
 
 	nlen += olen;
 
-	new_input = malloc(sizeof(char) * (nlen + 1));
-	new_input[nlen] = '\0';
+	new_enter = malloc(sizeof(char) * (nlen + 1));
+	new_enter[nlen] = '\0';
 
-	new_input = rep_i(&head, input, new_input, nlen);
+	new_enter = rep_i(&head, enter, new_enter, nlen);
 
-	free(input);
-	free(status);
+	free(enter);
+	free(state);
 	FreeVariable(&head);
 
-	return (new_input);
+	return (new_enter);
 }

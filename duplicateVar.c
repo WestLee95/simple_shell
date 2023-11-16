@@ -1,4 +1,4 @@
-#include "ichigos.h"
+#include "verma.h"
 
 /**
  * copy_s - copies infor betwixt void pointers.
@@ -59,9 +59,9 @@ void *prrealloc(void *ptr, unsigned int old_size, unsigned int new_size)
 
 
 /**
- * del_COMMENT - deletes comments from the input
- * @in: input string
- * Return: input without comments
+ * del_COMMENT - deletes comments from the enter
+ * @in: enter string
+ * Return: enter without comments
  */
 char *del_COMMENT(char *in)
 {
@@ -94,39 +94,39 @@ char *del_COMMENT(char *in)
 
 /**
  * shell_loop - Loop of shell
- * @dsh: data relevant (av, input, args)
+ * @dish: data relevant (av, enter, argz)
  * Return: no return.
  */
-void shell_loop(ichigos_shell *dsh)
+void shell_loop(verma_shell *dish)
 {
 int loop, iff;
-char *input;
+char *enter;
 
 for (loop = 1; loop == 1;)
 {
 write(STDIN_FILENO, "^-^ ", 4);
-input = READLINE(&iff);
+enter = READrule(&iff);
 if (iff != -1)
 {
-input = del_COMMENT(input);
-if (input == NULL)
+enter = del_COMMENT(enter);
+if (enter == NULL)
 continue;
 
-if (case_intfunc(dsh, input) == 1)
+if (case_intfunc(dish, enter) == 1)
 {
-dsh->status = 2;
-free(input);
+dish->state = 2;
+free(enter);
 continue;
 }
-input = replace_variable(input, dsh);
-loop = split(dsh, input);
-dsh->counter += 1;
-free(input);
+enter = replace_variable(enter, dish);
+loop = split(dish, enter);
+dish->count += 1;
+free(enter);
 }
 else
 {
 loop = 0;
-free(input);
+free(enter);
 }
 }
 }

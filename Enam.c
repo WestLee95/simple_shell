@@ -1,12 +1,12 @@
-#include "ichigos.h"
+#include "verma.h"
 /**
- * theLIne - assigns the line var for get_line
- * @lptr: Buffer that store the input str
- * @buffer: str that is been called to line
- * @i: the size of line
+ * therule - assigns the rule var for get_rule
+ * @lptr: Buffer that store the enter str
+ * @buffer: str that is been called to rule
+ * @i: the size of rule
  * @k: size of buffer
  */
-void theLIne(char **lptr, size_t *i, char *buffer, size_t k)
+void therule(char **lptr, size_t *i, char *buffer, size_t k)
 {
 
 	if (*lptr == NULL)
@@ -33,16 +33,16 @@ void theLIne(char **lptr, size_t *i, char *buffer, size_t k)
 	}
 }
 /**
- * CD - changes current directory
- * @dsh: data relevant
+ * ALT - changes current directory
+ * @dish: data relevant
  * Return: 1 on success
  */
-int CD(ichigos_shell *dsh)
+int ALT(verma_shell *dish)
 {
 	char *d;
 	int ie, i2, ih;
 
-	d = dsh->args[1];
+	d = dish->argz[1];
 
 	if (d != NULL)
 	{
@@ -53,48 +53,48 @@ int CD(ichigos_shell *dsh)
 
 	if (d == NULL || !ie || !i2 || !ih)
 	{
-		changeDir_(dsh);
+		alterDir_(dish);
 		return (1);
 	}
 
 	if (concomp("-", d) == 0)
 	{
-		changeDir_prev(dsh);
+		alterDir_prev(dish);
 		return (1);
 	}
 
 	if (concomp(".", d) == 0 || concomp("..", d) == 0)
 	{
-		Change_Dir(dsh);
+		Change_Dir(dish);
 		return (1);
 	}
 
-	Change_Dir(dsh);
+	Change_Dir(dish);
 
 	return (1);
 }
 
 
 /**
- * gettheLIne - Read inpt from stream
- * @lptr: buffer that stores the input
- * @i: size of lineptr
+ * gettherule - Read inpt from stream
+ * @lptr: buffer that stores the enter
+ * @i: size of ruleptr
  * @stream: stream to read from
  * Return: The number of bytes
  */
-ssize_t gettheLIne(char **lptr, size_t *i, FILE *stream)
+ssize_t gettherule(char **lptr, size_t *i, FILE *stream)
 {
 	int n;
-	static ssize_t input;
+	static ssize_t enter;
 	ssize_t retval;
 	char *buffer;
 	char t = 'z';
 
-	if (input == 0)
+	if (enter == 0)
 		fflush(stream);
 	else
 		return (-1);
-	input = 0;
+	enter = 0;
 
 	buffer = malloc(sizeof(char) * BUFSIZE);
 	if (buffer == 0)
@@ -102,26 +102,26 @@ ssize_t gettheLIne(char **lptr, size_t *i, FILE *stream)
 	while (t != '\n')
 	{
 		n = read(STDIN_FILENO, &t, 1);
-		if (n == -1 || (n == 0 && input == 0))
+		if (n == -1 || (n == 0 && enter == 0))
 		{
 			free(buffer);
 			return (-1);
 		}
-		if (n == 0 && input != 0)
+		if (n == 0 && enter != 0)
 		{
-			input++;
+			enter++;
 			break;
 		}
-		if (input >= BUFSIZE)
-			buffer = prrealloc(buffer, input, input + 1);
-		buffer[input] = t;
-		input++;
+		if (enter >= BUFSIZE)
+			buffer = prrealloc(buffer, enter, enter + 1);
+		buffer[enter] = t;
+		enter++;
 	}
-	buffer[input] = '\0';
-	theLIne(lptr, i, buffer, input);
-	retval = input;
+	buffer[enter] = '\0';
+	therule(lptr, i, buffer, enter);
+	retval = enter;
 	if (n != 0)
-		input = 0;
+		enter = 0;
 	return (retval);
 }
 
@@ -129,29 +129,29 @@ ssize_t gettheLIne(char **lptr, size_t *i, FILE *stream)
 
 /**
  * lefshell - exits the shell
- * @dsh: data relevant (status and args)
+ * @dish: data relevant (state and argz)
  * Return: 0 on success.
  */
-int lefshell(ichigos_shell *dsh)
+int lefshell(verma_shell *dish)
 {
 	unsigned int x;
 	int jiggy;
 	int sterling;
 	int big_num;
 
-	if (dsh->args[1] != NULL)
+	if (dish->argz[1] != NULL)
 	{
-		x = string_toInt(dsh->args[1]);
-		jiggy = check_if_int(dsh->args[1]);
-		sterling = Length_ofString(dsh->args[1]);
+		x = string_toInt(dish->argz[1]);
+		jiggy = examine_if_int(dish->argz[1]);
+		sterling = String_findLength(dish->argz[1]);
 		big_num = x > (unsigned int)INT_MAX;
 		if (!jiggy || sterling > 10 || big_num)
 		{
-			G_ERROR(dsh, 2);
-			dsh->status = 2;
+			G_ERROR(dish, 2);
+			dish->state = 2;
 			return (1);
 		}
-		dsh->status = (x % 256);
+		dish->state = (x % 256);
 	}
 	return (0);
 

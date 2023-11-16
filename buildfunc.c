@@ -1,26 +1,26 @@
-#include "ichigos.h"
+#include "verma.h"
 
 /**
  * builtINFunctions - builtin that passes the command in the arg
  * @cmd: command
  * Return: function pointer of the builtin command
  */
-int (*builtINFunctions(char *cmd))(ichigos_shell *)
+int (*builtINFunctions(char *cmd))(verma_shell *)
 {
 	builtin_t builtIN[] = {
 		{ "env", print_env },
 		{ "exit", lefshell },
-		{ "setenv", compa_env_names },
+		{ "setenv", compa_env_identitys },
 		{ "unsetenv", del_env },
-		{ "cd", CD },
+		{ "cd", ALT },
 		{ "help", HELP },
 		{ NULL, NULL }
 	};
 	int u;
 
-	for (u = 0; builtIN[u].name; u++)
+	for (u = 0; builtIN[u].identity; u++)
 	{
-		while (concomp(builtIN[u].name, cmd) == 0)
+		while (concomp(builtIN[u].identity, cmd) == 0)
 			break;
 	}
 
@@ -30,7 +30,7 @@ int (*builtINFunctions(char *cmd))(ichigos_shell *)
 
 /**
  * string_toInt - changes a string to an integer.
- * @s: the input string.
+ * @s: the enter string.
  * Return: an integer.
  */
 int string_toInt(char *s)
@@ -132,27 +132,27 @@ char *int_toString(int n)
 /**
  * case_intfunc - intermediate function to
  * find and print a syntax error
- * @dsh: data structure
- * @input: input string
+ * @dish: data structure
+ * @enter: enter string
  * Return: 1 if there is an error. 0 in other case
  */
-int case_intfunc(ichigos_shell *dsh, char *input)
+int case_intfunc(verma_shell *dish, char *enter)
 {
 	int b = 0;
 	int f_char = 0;
 	int i = 0;
 
-	f_char = index_char(input, &b);
+	f_char = index_char(enter, &b);
 	if (f_char == -1)
 	{
-		error_message(dsh, input, b, 0);
+		error_send_message(dish, enter, b, 0);
 		return (1);
 	}
 
-	i = syntax_err(input + b, 0, *(input + b));
+	i = syntax_err(enter + b, 0, *(enter + b));
 	if (i != 0)
 	{
-		error_message(dsh, input, b + i, 1);
+		error_send_message(dish, enter, b + i, 1);
 		return (1);
 	}
 

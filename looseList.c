@@ -1,4 +1,4 @@
-#include "ichigos.h"
+#include "verma.h"
 
 /**
  * fee_list - frees up the a def
@@ -47,13 +47,13 @@ free(x);
 }
 
 /**
- * end_node - add up a command line
+ * end_node - add up a command rule
  * at the end of a dap.
  * @top: top of linked list.
- * @line: a command line.
+ * @rule: a command rule.
  * Return: the address of the top.
  */
-dap *end_node(dap **top, char *line)
+dap *end_node(dap **top, char *rule)
 {
 dap *current, *x;
 
@@ -63,7 +63,7 @@ current = malloc(sizeof(dap));
 if (current == NULL)
 continue;
 
-current->line = line;
+current->rule = rule;
 current->next = NULL;
 x = *top;
 
@@ -83,10 +83,10 @@ return (*top);
 }
 
 /**
- * add_node - add up a separator found
+ * add_node - add up a divide found
  * at the end of a def.
  * @top: top of inked list.
- * @sep: separator found (; | &).
+ * @sep: divide found (; | &).
  * Return: address of the top.
  */
 def *add_node(def **top, char sep)
@@ -99,7 +99,7 @@ current = malloc(sizeof(def));
 if (current == NULL)
 continue;
 
-current->separator = sep;
+current->divide = sep;
 current->next = NULL;
 x = *top;
 

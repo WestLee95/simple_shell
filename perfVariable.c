@@ -1,32 +1,32 @@
-#include "ichigos.h"
+#include "verma.h"
 
 /**
  * non_printed_char_swap - swaps | and & for non-printed chars
- * @input: input string
+ * @enter: enter string
  * @bool: type of swap
  * Return: swapped string
  */
-char *non_printed_char_swap(char *input, int bool)
+char *non_printed_char_swap(char *enter, int bool)
 {
 int u;
 
 if (bool == 0)
 {
 u = 0;
-while (input[u])
+while (enter[u])
 {
-if (input[u] == '|')
+if (enter[u] == '|')
 {
-if (input[u + 1] != '|')
-input[u] = 16;
+if (enter[u + 1] != '|')
+enter[u] = 16;
 else
 u++;
 }
 
-if (input[u] == '&')
+if (enter[u] == '&')
 {
-if (input[u + 1] != '&')
-input[u] = 12;
+if (enter[u + 1] != '&')
+enter[u] = 12;
 else
 u++;
 }
@@ -36,57 +36,57 @@ u++;
 else
 {
 u = 0;
-while (input[u])
+while (enter[u])
 {
-input[u] = (input[u] == 16 ? '|' : input[u]);
-input[u] = (input[u] == 12 ? '&' : input[u]);
+enter[u] = (enter[u] == 16 ? '|' : enter[u]);
+enter[u] = (enter[u] == 12 ? '&' : enter[u]);
 u++;
 }
 }
-return (input);
+return (enter);
 }
 /**
- * addSeparators_and_cdLists - add separators and command lines in the lists
- * @hs: head of separator list
- * @hl: head of command lines list
- * @input: input string
+ * adddivides_and_cdLists - add divides and command rules in the lists
+ * @hs: head of divide list
+ * @hl: head of command rules list
+ * @enter: enter string
  * Return: no return
  */
-void addSeparators_and_cdLists(def **hs, dap **hl, char *input)
+void adddivides_and_cdLists(def **hs, dap **hl, char *enter)
 {
 	int u;
-	char *line;
+	char *rule;
 
-	input = non_printed_char_swap(input, 0);
+	enter = non_printed_char_swap(enter, 0);
 
-	for (u = 0; input[u]; u++)
+	for (u = 0; enter[u]; u++)
 	{
-		if (input[u] == ';')
-			add_node(hs, input[u]);
+		if (enter[u] == ';')
+			add_node(hs, enter[u]);
 
-		if (input[u] == '|' || input[u] == '&')
+		if (enter[u] == '|' || enter[u] == '&')
 		{
-			add_node(hs, input[u]);
+			add_node(hs, enter[u]);
 			u++;
 		}
 	}
 
-	line = split_string(input, ";|&");
+	rule = cut_string(enter, ";|&");
 	do {
-		line = non_printed_char_swap(line, 1);
-		end_node(hl, line);
-		line = split_string(NULL, ";|&");
-	} while (line != NULL);
+		rule = non_printed_char_swap(rule, 1);
+		end_node(hl, rule);
+		rule = cut_string(NULL, ";|&");
+	} while (rule != NULL);
 
 }
 /**
- * nextInLine - go to the next command line stored
- * @l_s: separator list
- * @l_l: command line list
- * @dsh: data structure
+ * nextInrule - go to the next command rule stored
+ * @l_s: divide list
+ * @l_l: command rule list
+ * @dish: data structure
  * Return: no return
  */
-void nextInLine(def **l_s, dap **l_l, ichigos_shell *dsh)
+void nextInrule(def **l_s, dap **l_l, verma_shell *dish)
 {
 	int loop_sep;
 	def *ls_s;
@@ -98,18 +98,18 @@ void nextInLine(def **l_s, dap **l_l, ichigos_shell *dsh)
 
 	while (ls_s != NULL && loop_sep)
 	{
-		if (dsh->status == 0)
+		if (dish->state == 0)
 		{
-			if (ls_s->separator == '&' || ls_s->separator == ';')
+			if (ls_s->divide == '&' || ls_s->divide == ';')
 				loop_sep = 0;
-			if (ls_s->separator == '|')
+			if (ls_s->divide == '|')
 				ls_l = ls_l->next, ls_s = ls_s->next;
 		}
 		else
 		{
-			if (ls_s->separator == '|' || ls_s->separator == ';')
+			if (ls_s->divide == '|' || ls_s->divide == ';')
 				loop_sep = 0;
-			if (ls_s->separator == '&')
+			if (ls_s->divide == '&')
 				ls_l = ls_l->next, ls_s = ls_s->next;
 		}
 		if (ls_s != NULL && !loop_sep)
@@ -122,11 +122,11 @@ void nextInLine(def **l_s, dap **l_l, ichigos_shell *dsh)
 
 
 /**
- * splityy - tokenizes the input string
- * @input: input string.
+ * splityy - tokenizes the enter string
+ * @enter: enter string.
  * Return: string splitted.
  */
-char **splityy(char *input)
+char **splityy(char *enter)
 {
 	size_t bs;
 	size_t u;
@@ -141,7 +141,7 @@ char **splityy(char *input)
 		exit(EXIT_FAILURE);
 	}
 
-	token = split_string(input, TOK_DELIM);
+	token = cut_string(enter, TOK_DELIM);
 	tokens[0] = token;
 
 	for (u = 1; token != NULL; u++)
@@ -156,7 +156,7 @@ char **splityy(char *input)
 				exit(EXIT_FAILURE);
 			}
 		}
-		token = split_string(NULL, TOK_DELIM);
+		token = cut_string(NULL, TOK_DELIM);
 		tokens[u] = token;
 	}
 
