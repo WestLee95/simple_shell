@@ -8,7 +8,7 @@
 ```
 ![Introductory Banner](https://github.com/Mzpenelope/shell-practice/raw/018bbc7ff0ab303096de4513e0d093be7b091fe6/giphy.gif)
 
-# Mohammed Basit Abdul&  Aria's ALX Shell Project
+#Enyonam Beatson-Affram and West Mwabacha
 
 Welcome to our Shell Project! This project, developed by Mohammed Basit Abdul and Atandoh Aria, is a command-line shell implementation built as part of our coursework at ALX Software Engineering School. The ALX Shell Project aims to provide a user-friendly and efficient shell environment for executing commands and managing a variety of tasks.
 
