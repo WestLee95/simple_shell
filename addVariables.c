@@ -31,7 +31,7 @@ dame *addVar(dame **init, int lvar, char *Vall, int lval)
 	{
 		while (b->next != NULL)
 			b = b->next;
-		b > next = crisp;
+		b->next = crisp;
 	}
 
 	return (*init);
@@ -50,10 +50,10 @@ void freeVar(dame **init)
 	if (init != NULL)
 	{
 		coil = *init;
-		while ((b = coil) != NULL)
+		while ((f = coil) != NULL)
 		{
-			coil = curl->next;
-			free(b);
+			coil = coil->next;
+			free(f);
 		}
 		*init = NULL;
 	}
@@ -83,13 +83,13 @@ char *display_path_error(man_shell *shd)
 		free(d_s);
 		return (NULL);
 	}
-	concpy(o, shd->man[0]);
-	concat(o, ": ");
-	concat(o, d_s);
-	concat(o, ": ");
-	concat(o, shd->arggs[0]);
-	concat(o, ": insufficient permission\n");
-	concat(o, "\0");
+	dup_string(o, shd->man[0]);
+	string_concat(o, ": ");
+	string_concat(o, d_s);
+	string_concat(o, ": ");
+	string_concat(o, shd->arggs[0]);
+	string_concat(o, ": insufficient permission\n");
+	string_concat(o, "\0");
 	free(d_s);
 	return (o);
 }

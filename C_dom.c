@@ -11,7 +11,7 @@ char *dup_mem(const char *s)
 
 	distance = String_length(s);
 	modern = malloc(sizeof(char) * (distance + 1));
-	if (fresh == NULL)
+	if (modern == NULL)
 		return (NULL);
 	copy_info_s(modern, s, distance + 1);
 	return (modern);
@@ -74,7 +74,7 @@ unsigned int u, bool;
 
 if (string != NULL)
 {
-if (comp_char(string, miled))
+if (comp_char_strings(string, miled))
 return (NULL);
 split_com = string; /*save initial location*/
 u = String_length(string);
@@ -95,7 +95,7 @@ for (u = 0; miled[u]; u++)
 {
 if (*split_com == miled[u])
 {
-	*split = '\0';
+	*split_com = '\0';
 if (split_com == string_start)
 	string_start++;
 break;
