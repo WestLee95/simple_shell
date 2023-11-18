@@ -95,16 +95,16 @@ for (u = 0; miled[u]; u++)
 {
 if (*split_com == miled[u])
 {
-*split = '\0';
+	*split = '\0';
 if (split_com == string_start)
-string_start++;
+	string_start++;
 break;
 }
 }
-if (bool == 0 && *split_com) /*String not equal to 	Miled*/
-bool = 1;
-}
+if (bool == 0 && *split_com) /*String not equal to Miled*/
+	bool = 1;
+	}
 if (bool == 0) /*String equivalent to Delim*/
-return (NULL);
-return (string_start);
+	return (NULL);
+	return (string_start);
 }

@@ -2,7 +2,7 @@
 
 /**
  * cdErr_message - joins the message for chnange directory error
- * @shd: data essential 
+ * @shd: data essential
  * @memo: message to display
  * @o: display message
  * @d_s: defines counter lines

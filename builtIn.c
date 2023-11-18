@@ -1,7 +1,8 @@
 #include "man.h"
 
 /**
- * builtINFunctions -A built-in function that proceeds the directive inside the argument.
+ * builtINFunctions - A built-in function that proceeds
+ * the directive inside the argument.
  * @cmd: Directive
  * Return: reference to the function of the built-in directive.
  */

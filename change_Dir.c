@@ -50,7 +50,7 @@ void ChangeDirectory(man_shell *shd)
 
 /**
  * ChaneUser_dir - convert to a directory given by the user
- * @shd: data essential 
+ * @shd: data essential
  * Return:do not return any value
  */
 void ChaneUser_dir(man_shell *shd)
@@ -82,7 +82,7 @@ void ChaneUser_dir(man_shell *shd)
 }
 /**
  * changeDir_ToPrev - convert to the initial directory
- * @shd: data essential 
+ * @shd: data essential
  * Return:  return no value
  */
 void changeDir_ToPrev(man_shell *shd)
@@ -123,7 +123,7 @@ void changeDir_ToPrev(man_shell *shd)
 
 /**
  * ChangeDir_home - converts to root directory
- * @shd: data essential 
+ * @shd: data essential
  * Return:  return no value
  */
 void ChangeDir_home(man_shell *shd)

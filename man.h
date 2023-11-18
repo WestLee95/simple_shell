@@ -21,39 +21,39 @@ extern char **environ;
 
 typedef struct info
 {
-    char **man;
-    char *enter;
-    char **arggs;
-    int state;
-    int countter;
-    char **environ_var;
-    char *p_id;
+	char **man;
+	char *enter;
+	char **arggs;
+	int state;
+	int countter;
+	char **environ_var;
+	char *p_id;
 } man_shell;
 
 typedef struct def_s
 {
-    char divider;
-    struct def_s *next;
+	char divider;
+	struct def_s *next;
 } def;
 
 typedef struct dap_s
 {
-    char *line;
-    struct dap_s *next;
+	char *line;
+	struct dap_s *next;
 } dap;
 
 typedef struct dame_list
 {
-    int Variable_length;
-    char *Vall;
-    int Value_length;
-    struct dame_list *next;
+	int Variable_length;
+	char *Vall;
+	int Value_length;
+	struct dame_list *next;
 } dame;
 
 typedef struct builtin_s
 {
-    char *tag;
-    int (*f)(man_shell *shd);
+	char *tag;
+	int (*f)(man_shell *shd);
 } builtin_t;
 
 char *cdErr_message(man_shell *shd, char *memo, char *o, char *d_s);

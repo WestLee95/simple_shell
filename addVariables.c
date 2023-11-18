@@ -31,13 +31,13 @@ dame *addVar(dame **init, int lvar, char *Vall, int lval)
 	{
 		while (b->next != NULL)
 			b = b->next;
-		-b>next = crisp;
+		-b > next = crisp;
 	}
 
 	return (*init);
 }
 
-/**f
+/**
  * freeVar - it release the materials allocated by the given list.
  * @init: The starting of a linked list.
  * Return:should not return any output or result.
@@ -60,7 +60,8 @@ void freeVar(dame **init)
 }
 
 /**
- *  display_path_error- Error data related to the surrounding variable in get_env_Var.
+ *  display_path_error- Error data related to the
+ *  surrounding variable in get_env_Var.
  * @shd: important data, as well as counters and arguments.
  * Return: A notice showing that there's an error.
  */
@@ -94,7 +95,8 @@ char *display_path_error(man_shell *shd)
 }
 
 /**
- * disp_error_info - Error data in  relation to route and permission denial failure..
+ * disp_error_info - Error data in  relation
+ * to route and permission denial failure..
  * @shd: important  data, with counters and arguments also.
  * Return: String with an error output.
  */

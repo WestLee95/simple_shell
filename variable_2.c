@@ -85,7 +85,7 @@ char *loc_char_String(char *s, char c)
  */
 int acq_len_String(char *s, char *allow)
 {
-	int r, d, bool;freeVar
+	int r, d, bool; freeVar
 
 	for (r = 0; *(s + r) != '\0'; r++)
 	{
