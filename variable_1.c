@@ -51,7 +51,7 @@ int checkif(dame **h, char *in, char *st, man_shell *info)
 	int x, lst, lpd;
 
 	lst = String_length(st);
-	lpd = String_length(data->p_id);
+	lpd = String_length(info->p_id);
 
 	for (x = 0; in[x]; x++)
 	{
@@ -72,7 +72,7 @@ int checkif(dame **h, char *in, char *st, man_shell *info)
 			else if (in[x + 1] == ';')
 				addVar(h, 0, NULL, 0);
 			else
-				right_var(h, in + x, data);
+				right_variable(h, in + x, info);
 		}
 	}
 
@@ -94,7 +94,7 @@ char *replace_i(dame **init, char *enter, char *new_input, int newlength)
 
 	indx = *init;
 	x = y = 0;
-	while (y < nlen)
+	while (y < newlength)
 	{
 		if (enter[y] == '$')
 		{
@@ -140,10 +140,10 @@ char *replace_var(char *enter, man_shell *shd)
 {
 	dame *init, *indx;
 	char *state, *new_input;
-	int olen, nlen;
-
-	status = intTo_String(shd->state);
-	head = NULL;
+	int olen, newlength;
+	
+	state = intTo_String(shd->state);
+	init = NULL;
 
 	olen = checkif(&init, enter, state, shd);
 
@@ -154,7 +154,7 @@ char *replace_var(char *enter, man_shell *shd)
 	}
 
 	indx = init;
-	nlen = 0;
+	newlength = 0;
 
 	while (indx != NULL)
 	{
@@ -165,13 +165,13 @@ char *replace_var(char *enter, man_shell *shd)
 	newlength += olen;
 
 	new_input = malloc(sizeof(char) * (newlength + 1));
-	new_input[nlen] = '\0';
+	new_input[newlength] = '\0';
 
-	new_input = rep_i(&init, enter, new_input, newlength);
+	new_input = replace_i(&init, enter, new_input, newlength);
 
 	free(enter);
-	free(sate);
-	freeVar(&heafreeVard);
+	free(state);
+	freeVar(&init);
 
 	return (new_input);
 }

@@ -31,7 +31,7 @@ dame *addVar(dame **init, int lvar, char *Vall, int lval)
 	{
 		while (b->next != NULL)
 			b = b->next;
-		-b > next = crisp;
+		b > next = crisp;
 	}
 
 	return (*init);

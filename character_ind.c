@@ -105,14 +105,14 @@ int split_com(man_shell *shd, char *enter)
 
 	addSep_cdLists(&x, &y, enter);
 
-	l_s = g;
-	l_l = h;
+	l_s = x;
+	l_l = y;
 
 	while (l_l != NULL)
 	{
 		shd->enter = l_l->line;
 		shd->arggs = split(shd->enter);
-		loop = kano(shd);
+		loop = find_command(shd);
 		free(shd->arggs);
 
 		if (loop == 0)
@@ -124,8 +124,8 @@ int split_com(man_shell *shd, char *enter)
 			l_l = l_l->next;
 	}
 
-	free_def_list(&g);
-	free_def_list(&h);
+	free_def_list(&x);
+	free_def_list(&y);
 
 	if (loop == 0)
 		return (0);

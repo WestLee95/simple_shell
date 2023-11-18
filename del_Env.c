@@ -11,7 +11,7 @@ char *PGLA(char *tag, char *worth)
 	char *modern;
 	int len_name, Value_length, len;
 
-	len_name = String_length(name);
+	len_name = String_length(tag);
 	Value_length = String_length(worth);
 	len = len_name + Value_length + 2;
 	modern = malloc(sizeof(char) * (len));
@@ -37,18 +37,18 @@ void set_env_Var(char *tag, char *worth, man_shell *shd)
 	for (x = 0; shd->environ_var[x]; x++)
 	{
 		env_var = dup_mem(shd->environ_var[x]);
-		env_name = string_split(env_var, "=");
-		if (con_comp(env_name, tag) == 0)
+		name_env = string_split(env_var, "=");
+		if (con_comp(name_env, tag) == 0)
 		{
 			free(shd->environ_var[x]);
-			shd->environ_var[x] = PGLA(env_name, worth);
+			shd->environ_var[x] = PGLA(name_env, worth);
 			free(env_var);
 			return;
 		}
 		free(env_var);
 	}
 
-	shd->environ_var = **pr_malloc(shd->environ_var, x, sizeof(char *) * (x + 2));
+	shd->environ_var = pr_malloc(shd->environ_var, x, sizeof(char *) * (x + 2));
 	shd->environ_var[x] = PGLA(tag, worth);
 	shd->environ_var[x + 1] = NULL;
 }
@@ -90,7 +90,7 @@ int del_env_var(man_shell *shd)
 		return (1);
 	}
 	s = -1;
-	for (q = 0; shd->environ_var[i]; q++)
+	for (q = 0; shd->environ_var[q]; q++)
 	{
 		env_var = dup_mem(shd->environ_var[q]);
 		env_name = string_split(env_var, "=");

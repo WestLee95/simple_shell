@@ -9,19 +9,19 @@
 int (*builtINFunctions(char *cmd))(man_shell *)
 {
 	builtin_t builtIN[] = {
-		{ "env", print_env },
-		{ "exit", lefshell },
-		{ "setenv", compa_env_names },
-		{ "unsetenv", del_env },
-		{ "cd", CD },
-		{ "help", HELP },
+		{ "env", print_env_var },
+		{ "exit", leave_shell },
+		{ "setenv", comp_env_names },
+		{ "unsetenv", del_env_var },
+		{ "cd", Change_Dir },
+		{ "help", HELP_ret },
 		{ NULL, NULL }
 	};
 	int l;
 
-	for (l = 0; builtIN[l].name; l++)
+	for (l = 0; builtIN[l].tag; l++)
 	{
-		while (concomp(builtIN[l].name, cmd) == 0)
+		while (con_comp(builtIN[l].tag, cmd) == 0)
 			break;
 	}
 
@@ -85,7 +85,7 @@ int getLength_ofInt(int n)
 	}
 	while (r > 9)
 	{
-		t++;
+		s++;
 		r = r / 10;
 	}
 
@@ -119,13 +119,13 @@ char *intTo_String(int n)
 		r = n;
 	}
 
-	y--;
+	s--;
 	do {
 		*(cushion + s) = (r % 10) + '0';
 		r = r / 10;
-		y--;
+		s--;
 	}
-	while (x > 0)
+	while (r > 0)
 		;
 	return (cushion);
 }
@@ -150,8 +150,8 @@ int interm_func(man_shell *shd, char *enter)
 		return (1);
 	}
 
-	i = syntaxError(enter + c, 0, *(enter + c));
-	if (i != 0)
+	a = syntaxError(enter + c, 0, *(enter + c));
+	if (a != 0)
 	{
 		Print_error_message(shd, enter, c + a, 1);
 		return (1);

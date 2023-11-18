@@ -109,7 +109,7 @@ if (b == NULL)
 }
 else
 {
-while (x->next != NULL)
+while (b->next != NULL)
 b = b->next;
 b->next = current;
 }

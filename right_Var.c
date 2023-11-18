@@ -10,7 +10,7 @@ char *swap_non_printed_char(char *enter, int bool)
 {
 	int u;
 
-	if (bool == 0)string_split
+	if (bool == 0)
 	{
 		u = 0;
 		while (enter[u])

@@ -8,9 +8,9 @@ void _help_info(void)
 {
 	char *help = "cd: cd [-L|[-P [-e]] [-@]] [dir]\n";
 
-	write(STDOUT_FILENO, help, Length_ofString(help));
+	write(STDOUT_FILENO, help, String_length(help));
 	help = "\tChange the working directory.\n ";
-	write(STDOUT_FILENO, help, Length_ofString(help));
+	write(STDOUT_FILENO, help, String_length(help));
 }
 /**
  * help_options - alternative for the help function.
@@ -21,11 +21,11 @@ void help_options(void)
 {
 	char *help = "help: help [-dms] [pattern ...]\n";
 
-	write(STDOUT_FILENO, help, Length_ofString(help));
+	write(STDOUT_FILENO, help, String_length(help));
 	help = "\tDisplay information about commands.\n ";
-	write(STDOUT_FILENO, help, Length_ofString(help));
+	write(STDOUT_FILENO, help, String_length(help));
 	help = "Display brief summary of builtin commands.\n";
-	write(STDOUT_FILENO, help, Length_ofString(help));
+	write(STDOUT_FILENO, help, String_length(help));
 }
 /**
  * help_option2 - exact thing.
@@ -36,9 +36,9 @@ void help_option2(void)
 {
 	char *help = "alias: alias [-p] [name[=value]...]\n";
 
-	write(STDOUT_FILENO, help, Length_ofString(help));
+	write(STDOUT_FILENO, help, String_length(help));
 	help = "\tDefine or display aliases.\n ";
-	write(STDOUT_FILENO, help, Length_ofString(help));
+	write(STDOUT_FILENO, help, String_length(help));
 }
 
 
@@ -61,11 +61,11 @@ int HELP_ret(man_shell *shd)
 	else if (con_comp(shd->arggs[1], "help") == 0)
 		help_options();
 	else if (con_comp(shd->arggs[1], "exit") == 0)
-		exit_h();
+		exit_help();
 	else if (con_comp(shd->arggs[1], "cd") == 0)
 		_help_info();
 	else if (con_comp(shd->arggs[1], "alias") == 0)
-		elp_option2();
+		help_option2();
 	else
 		write(STDERR_FILENO, shd->arggs[0],
 		      String_length(shd->arggs[0]));

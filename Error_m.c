@@ -18,11 +18,11 @@ int err_call(man_shell *shd, int ave)
 		w = display_path_error(shd);
 		break;
 	case 127:
-		w = *cmdNotFound_msg(shd);
+		w = cmdNotFound_msg(shd);
 		break;
-	case 2:
+		case 2:
 		if (con_comp("exit", shd->arggs[0]) == 0)
-			w = exitIn_get(dsh);
+			w = exitIn_get(shd);
 		else if (con_comp("cd", shd->arggs[0]) == 0)
 			w = error_cd(shd);
 		break;
@@ -30,7 +30,7 @@ int err_call(man_shell *shd, int ave)
 
 	if (w)
 	{
-		write(STDERR_FILENO, w, String_length(e));
+		write(STDERR_FILENO, w, String_length(w));
 		free(w);
 	}
 
@@ -57,7 +57,7 @@ char *READ_LINE(int *dubber)
 	char *enter = NULL;
 	size_t bufsize = 0;
 
-	*dub = getline(&enter, &bufsize, stdin);
+	*dubber = getline(&enter, &bufsize, stdin);
 
 	return (enter);
 }
